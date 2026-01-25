@@ -205,3 +205,44 @@ cython_debug/
 marimo/_static/
 marimo/_lsp/
 __marimo__/
+
+# TPC-H compiled binaries and generated files
+TPC-H V3.0.1/dbgen/dbgen
+TPC-H V3.0.1/dbgen/qgen
+TPC-H V3.0.1/dbgen/*.o
+TPC-H V3.0.1/dbgen/*.tbl
+generated_queries/
+
+# TPC-H documentation and non-essential files
+TPC-H V3.0.1/EULA.txt
+TPC-H V3.0.1/specification.pdf
+TPC-H V3.0.1/specification.docx
+TPC-H V3.0.1/dbgen/README
+TPC-H V3.0.1/dbgen/HISTORY
+TPC-H V3.0.1/dbgen/BUGS
+TPC-H V3.0.1/dbgen/PORTING.NOTES
+TPC-H V3.0.1/dbgen/dss.ddl
+TPC-H V3.0.1/dbgen/dss.ri
+
+# TPC-H reference data and test directories
+TPC-H V3.0.1/ref_data/
+TPC-H V3.0.1/dbgen/tests/
+TPC-H V3.0.1/dbgen/answers/
+TPC-H V3.0.1/dbgen/check_answers/
+TPC-H V3.0.1/dbgen/reference/
+TPC-H V3.0.1/dev-tools/
+
+# TPC-H IDE project files
+TPC-H V3.0.1/dbgen/*.dsw
+TPC-H V3.0.1/dbgen/*.sln
+TPC-H V3.0.1/dbgen/*.vcproj
+TPC-H V3.0.1/dbgen/*.dsp
+TPC-H V3.0.1/dbgen/tpch.vcproj
+
+# TPC-H scripts we don't need
+TPC-H V3.0.1/dbgen/*.sh
+TPC-H V3.0.1/dbgen/update_release.sh
+TPC-H V3.0.1/dbgen/column_split.sh
+
+*.md
+*.txt

@@ -40,7 +40,7 @@
 *
 */
 #include <stdio.h>
-#ifndef _POSIX_SOURCE
+#if !defined(_POSIX_SOURCE) && !defined(LINUX)
 #include <malloc.h>
 #endif /* POSIX_SOURCE */
 #if (defined(_POSIX_)||!defined(WIN32))
