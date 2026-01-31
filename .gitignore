@@ -211,7 +211,7 @@ TPC-H V3.0.1/dbgen/dbgen
 TPC-H V3.0.1/dbgen/qgen
 TPC-H V3.0.1/dbgen/*.o
 TPC-H V3.0.1/dbgen/*.tbl
-generated_queries/
+TPC-H-generated/
 
 # TPC-H documentation and non-essential files
 TPC-H V3.0.1/EULA.txt
