@@ -58,7 +58,7 @@ AIX_CFLAGS		= -q64 -O3 -D_LARGE_FILES
 HPUX_CFLAGS		= -O3 -Wall
 LINUX_CFLAGS	= -O3
 NCR_CFLAGS		= -g 
-MACOS_CFLAGS		= -g -Wall
+MACOS_CFLAGS		= -g -Wall -Wno-error=implicit-int -Wno-error=deprecated-non-prototype
 SOLARIS_CFLAGS	= -O3 -Wall
 SOL86_CFLAGS	= -O3 
 BASE_CFLAGS    	= -D_FILE_OFFSET_BITS=64 -D_LARGEFILE_SOURCE -DYYDEBUG #-maix64 -DMEM_TEST 
@@ -95,7 +95,7 @@ AIX_YACC	= yacc
 HPUX_YACC	= bison -y
 LINUX_YACC	= yacc
 NCR_YACC	= yacc
-MACOS_YACC	= yacc
+MACOS_YACC	= bison -y
 SOLARIS_YACC	= yacc
 SOL86_YACC	= yacc
 YACC		= $($(OS)_YACC)

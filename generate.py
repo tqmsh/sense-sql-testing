@@ -6,8 +6,8 @@ import shutil
 import argparse
 from pathlib import Path
 
-TPCH_DIR = Path(__file__).parent / "TPC-H V3.0.1" / "dbgen"
-OUTPUT_DIR = Path(__file__).parent / "TPC-H-generated"
+TPCH_DIR = Path(__file__).parent / "vendor" / "TPC-H" / "dbgen"
+OUTPUT_DIR = Path(__file__).parent / "OUTPUT" / "TPC-H"
 QGEN_BIN = TPCH_DIR / "qgen"
 DBGEN_BIN = TPCH_DIR / "dbgen"
 

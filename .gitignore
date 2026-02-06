@@ -1,3 +1,6 @@
+# Generated output (can be regenerated with generate.py and generate_tpcds.py)
+OUTPUT/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[codz]
