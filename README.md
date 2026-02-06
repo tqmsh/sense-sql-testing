@@ -90,12 +90,12 @@ EOF
 
 | --data-size | Actual Size | Use Case |
 |-------------|-------------|----------|
-| 1           | 1MB         | Fast testing (TPC-H only) |
-| 10          | 10MB        | Development (default) |
-| 100         | 100MB       | Integration testing |
-| 1000        | 1GB         | Performance testing |
+| 1           | 1GB         | Development (default, minimum) |
+| 2           | 2GB         | Testing |
+| 10          | 10GB        | Integration testing |
+| 100         | 100GB       | Performance testing |
 
-**Note:** TPC-DS minimum scale is 10 (generates ~11GB data).
+**Note:** TPC-DS minimum scale is 1 (generates ~1.2GB). Parameter is in GB.
 
 ## Current Status
 

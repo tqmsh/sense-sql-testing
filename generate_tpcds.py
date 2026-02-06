@@ -110,15 +110,14 @@ def main():
     parser = argparse.ArgumentParser(
         description='Generate TPC-DS queries, schema, and data'
     )
-    parser.add_argument('--data-size', type=float, default=10,
-                       help='Data size in MB (default: 10MB). Note: TPC-DS minimum scale is ~1MB')
+    parser.add_argument('--data-size', type=float, default=1,
+                       help='Data size in GB (default: 1GB, minimum: 1GB)')
     args = parser.parse_args()
 
-    scale_factor = max(1, args.data_size / 1000)
+    scale_factor = max(1, args.data_size)
 
     print(f"=== TPC-DS Generator ===")
-    print(f"Target data size: {args.data_size} MB")
-    print(f"Scale factor: {scale_factor}")
+    print(f"Scale factor: {scale_factor} GB")
     print()
 
     # Clean output directory
