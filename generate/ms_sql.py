@@ -96,7 +96,7 @@ def collect_wwi() -> tuple[list[dict], list[dict]]:
     return queries, schemas
 
 
-def write_report(all_queries: list[dict], output_dir: Path):
+def write_report(all_queries: list[dict], output_dir: Path, title: str = "Microsoft SQL Samples"):
     ranked = sorted(all_queries, key=lambda q: q["loc"], reverse=True)
     locs = [q["loc"] for q in all_queries]
     locs_sorted = sorted(locs)
@@ -106,7 +106,7 @@ def write_report(all_queries: list[dict], output_dir: Path):
         return locs_sorted[min(int(p / 100 * n), n - 1)]
 
     lines = [
-        "# Microsoft SQL Samples — Complexity Report",
+        f"# {title} — Complexity Report",
         "",
         "## Summary",
         "",
@@ -158,9 +158,10 @@ def main():
         (wwi_s_out / s["name"]).write_text(s["content"] + "\n")
     print(f"[wideworldimporters] {len(wwi_queries)} objects, {len(wwi_schemas)} tables")
 
-    all_queries = aw_queries + wwi_queries
-    write_report(all_queries, OUTPUT_DIR)
+    write_report(aw_queries, OUTPUT_DIR / "adventureworks", "AdventureWorks")
+    write_report(wwi_queries, OUTPUT_DIR / "wideworldimporters", "WideWorldImporters")
 
+    all_queries = aw_queries + wwi_queries
     print()
     print("=== MS SQL Extraction Complete ===")
     print(f"  Total objects: {len(all_queries)}")
