@@ -16,7 +16,7 @@ set -e
 
 # Configuration
 HF_TOKEN="${HF_TOKEN:-hf_your_token_here}"  # Replace with your token or set env var
-REPO_NAME_SUFFIX="tpc-sql-benchmarks"       # Will become: username/tpc-sql-benchmarks
+REPO_NAME_SUFFIX="sense-sql-testing"        # Will become: username/sense-sql-testing
 OUTPUT_DIR="output"
 
 # Export for Python subprocesses
