@@ -5,6 +5,9 @@ import os
 import shutil
 import argparse
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).parent))
+from utils import normalize_sql
 
 ROOT = Path(__file__).parent.parent
 TPCDS_DIR = ROOT / "vendor" / "TPC-DS" / "tools"
@@ -52,7 +55,7 @@ def generate_queries(query_dir, scale_factor):
         query_sql = result.stdout.strip()
 
         query_name = template_name.replace('.tpl', '.sql')
-        (query_dir / query_name).write_text(query_sql + '\n')
+        (query_dir / query_name).write_text(normalize_sql(query_sql) + '\n')
 
     query_files = sorted(query_dir.glob("*.sql"))
     print(f"Generated {len(query_files)} queries")

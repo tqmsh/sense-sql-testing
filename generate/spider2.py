@@ -14,6 +14,7 @@ Output layout:
 import shutil
 import csv
 from pathlib import Path
+from utils import normalize_sql, count_loc
 
 ROOT        = Path(__file__).parent.parent
 VENDOR_DIR  = ROOT / "vendor" / "spider2"
@@ -35,7 +36,8 @@ def collect_queries(query_dir: Path, prefix: str) -> list[dict]:
     queries = []
     for sql_file in sorted(query_dir.glob("*.sql")):
         content = sql_file.read_text(encoding="utf-8", errors="replace").strip()
-        loc = len([l for l in content.splitlines() if l.strip()])
+        content = normalize_sql(content)
+        loc = count_loc(content)
         queries.append({
             "name": f"{prefix}_{sql_file.name}",
             "original": sql_file.name,

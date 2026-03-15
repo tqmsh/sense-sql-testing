@@ -19,6 +19,7 @@ Output layout:
 import json
 import shutil
 from pathlib import Path
+from utils import normalize_sql, count_loc
 
 ROOT       = Path(__file__).parent.parent
 VENDOR_DIR = ROOT / "vendor" / "beaver"
@@ -43,8 +44,8 @@ def collect_queries(json_path: Path, prefix: str) -> list[dict]:
         sql = row.get("oracle_sql") or row.get("sql", "")
         if not sql or sql.strip().lower() == "null":
             continue
-        sql = sql.strip()
-        loc = len([l for l in sql.splitlines() if l.strip()])
+        sql = normalize_sql(sql)
+        loc = count_loc(sql)
         queries.append({
             "name": f"{prefix}_{i:04d}_{row.get('db_id','unknown')}.sql",
             "content": sql,

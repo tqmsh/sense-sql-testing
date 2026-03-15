@@ -5,6 +5,9 @@ import os
 import shutil
 import argparse
 from pathlib import Path
+import sys
+sys.path.insert(0, str(Path(__file__).parent))
+from utils import normalize_sql
 
 ROOT = Path(__file__).parent.parent
 TPCH_DIR = ROOT / "vendor" / "TPC-H" / "dbgen"
@@ -33,7 +36,7 @@ def generate_queries(query_dir):
         )
 
         output_file = query_dir / f"query_{template_num}.sql"
-        output_file.write_text(result.stdout)
+        output_file.write_text(normalize_sql(result.stdout) + "\n")
 
 def copy_schema(output_base):
     schema_dir = output_base / "schema"

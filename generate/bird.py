@@ -19,6 +19,7 @@ Note: Schema files are not included in the HuggingFace dataset.
 
 import shutil
 from pathlib import Path
+from utils import normalize_sql, count_loc
 
 ROOT       = Path(__file__).parent.parent
 OUTPUT_DIR = ROOT / "output" / "bird"
@@ -35,10 +36,10 @@ def collect_queries(split_name: str) -> list[dict]:
     ds = load_dataset("birdsql/bird_mini_dev", split=split_name)
     queries = []
     for row in ds:
-        sql = row["SQL"].strip()
+        sql = normalize_sql(row["SQL"].strip())
         if not sql:
             continue
-        loc = len([l for l in sql.splitlines() if l.strip()])
+        loc = count_loc(sql)
         safe_name = f"{row['db_id']}__{row['question_id']}.sql"
         queries.append({
             "name": safe_name,

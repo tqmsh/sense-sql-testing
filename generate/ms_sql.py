@@ -25,6 +25,7 @@ Output layout:
 import re
 import shutil
 from pathlib import Path
+from utils import normalize_sql, count_loc
 
 ROOT       = Path(__file__).parent.parent
 AW_SCRIPT  = ROOT / "vendor" / "ms_sql_samples" / "samples" / "databases" / "adventure-works" / "oltp-install-script" / "instawdb.sql"
@@ -54,6 +55,7 @@ def split_adventureworks() -> tuple[list[dict], list[dict]]:
         if not m:
             continue
         obj_type = m.group(1).upper()
+        batch = normalize_sql(batch)
         # Extract object name
         name_match = re.search(
             r"CREATE\s+(?:PROCEDURE|FUNCTION|TRIGGER|VIEW|TABLE)\s+[\[\w\.]+[\]\w]*\.[\[\w]+\]?|"
@@ -62,7 +64,7 @@ def split_adventureworks() -> tuple[list[dict], list[dict]]:
         )
         raw_name = name_match.group(0).split()[-1] if name_match else f"object_{len(queries)}"
         safe_name = re.sub(r"[\[\]\s/\\]", "_", raw_name).strip("_") + ".sql"
-        loc = len([l for l in batch.splitlines() if l.strip()])
+        loc = count_loc(batch)
         entry = {"name": safe_name, "content": batch, "loc": loc}
         if obj_type == "TABLE":
             schemas.append(entry)
@@ -81,9 +83,10 @@ def collect_wwi() -> tuple[list[dict], list[dict]]:
         if parent not in QUERY_DIRS and parent not in SCHEMA_DIRS:
             continue
         content = sql_file.read_text(encoding="utf-8", errors="replace").strip()
+        content = normalize_sql(content)
         if not content:
             continue
-        loc = len([l for l in content.splitlines() if l.strip()])
+        loc = count_loc(content)
         # Build a namespaced filename: Schema_ObjectName.sql
         schema_folder = sql_file.parent.parent.name
         safe_name = f"{schema_folder}__{sql_file.stem.replace(' ', '_')}.sql"

@@ -19,6 +19,7 @@ Output layout:
 import json
 import shutil
 from pathlib import Path
+from utils import normalize_sql, count_loc
 
 ROOT       = Path(__file__).parent.parent
 VENDOR_DIR = ROOT / "vendor" / "ehrsql" / "dataset" / "ehrsql"
@@ -45,7 +46,8 @@ def collect_queries(db: str) -> list[dict]:
             if pattern in seen_patterns:
                 continue
             seen_patterns.add(pattern)
-            loc = len([l for l in sql.splitlines() if l.strip()])
+            sql = normalize_sql(sql)
+            loc = count_loc(sql)
             safe_name = row["id"].replace("/", "_").replace(" ", "_")
             queries.append({
                 "name": f"{safe_name}.sql",

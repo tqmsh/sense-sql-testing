@@ -15,6 +15,7 @@ Output layout:
 
 import shutil
 from pathlib import Path
+from utils import normalize_sql, count_loc
 
 ROOT       = Path(__file__).parent.parent
 VENDOR_DIR = ROOT / "vendor" / "sqlcop" / "Current"
@@ -25,7 +26,8 @@ def collect_procedures() -> list[dict]:
     procedures = []
     for sql_file in sorted(VENDOR_DIR.glob("*.sql")):
         content = sql_file.read_text(encoding="utf-8", errors="replace").strip()
-        loc = len([l for l in content.splitlines() if l.strip()])
+        content = normalize_sql(content)
+        loc = count_loc(content)
         safe_name = sql_file.stem.replace(" ", "_").replace("/", "_")
         procedures.append({
             "name": f"{safe_name}.sql",
