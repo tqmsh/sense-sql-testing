@@ -11,7 +11,7 @@ Sources:
 
 Output layout:
   output/ehrsql/
-    queries/   one .sql file per query (skips unanswerable)
+    queries/   one .sql per unique query pattern (deduped by q_tag)
     schema/    mimic_iii.sql, eicu.sql
     report.md  complexity report ranked by LOC
 """
@@ -26,6 +26,8 @@ OUTPUT_DIR = ROOT / "output" / "ehrsql"
 
 
 def collect_queries(db: str) -> list[dict]:
+    """One representative query per unique q_tag pattern across all splits."""
+    seen_patterns: set[str] = set()
     queries = []
     db_dir = VENDOR_DIR / db
     for split in ["train", "valid", "test"]:
@@ -39,9 +41,14 @@ def collect_queries(db: str) -> list[dict]:
             sql = row.get("query", "").strip()
             if not sql or sql.lower() == "null":
                 continue
+            pattern = str(row.get("q_tag", row["id"]))
+            if pattern in seen_patterns:
+                continue
+            seen_patterns.add(pattern)
             loc = len([l for l in sql.splitlines() if l.strip()])
+            safe_name = row["id"].replace("/", "_").replace(" ", "_")
             queries.append({
-                "name": f"{db}_{split}_{row['id']}.sql",
+                "name": f"{safe_name}.sql",
                 "content": sql,
                 "loc": loc,
             })
@@ -126,7 +133,7 @@ def main():
         queries = collect_queries(db)
         for q in queries:
             (queries_out / q["name"]).write_text(q["content"] + "\n")
-        print(f"[{db}] {len(queries)} queries extracted")
+        print(f"[{db}] {len(queries)} unique patterns extracted")
         all_queries.extend(queries)
 
     schemas = collect_schemas()
