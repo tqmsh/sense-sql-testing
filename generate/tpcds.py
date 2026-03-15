@@ -6,11 +6,12 @@ import shutil
 import argparse
 from pathlib import Path
 
-TPCDS_DIR = Path(__file__).parent / "vendor" / "TPC-DS" / "tools"
-OUTPUT_DIR = Path(__file__).parent / "OUTPUT" / "TPC-DS"
+ROOT = Path(__file__).parent.parent
+TPCDS_DIR = ROOT / "vendor" / "TPC-DS" / "tools"
+OUTPUT_DIR = ROOT / "output" / "TPC-DS"
 DSDGEN_BIN = TPCDS_DIR / "dsdgen"
 DSQGEN_BIN = TPCDS_DIR / "dsqgen"
-QUERY_TEMPLATES_DIR = Path(__file__).parent / "vendor" / "TPC-DS" / "query_templates"
+QUERY_TEMPLATES_DIR = ROOT / "vendor" / "TPC-DS" / "query_templates"
 TEMPLATES_LIST = QUERY_TEMPLATES_DIR / "templates.lst"
 
 def compile_tools():

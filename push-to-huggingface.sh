@@ -17,7 +17,7 @@ set -e
 # Configuration
 HF_TOKEN="${HF_TOKEN:-hf_your_token_here}"  # Replace with your token or set env var
 REPO_NAME_SUFFIX="tpc-sql-benchmarks"       # Will become: username/tpc-sql-benchmarks
-OUTPUT_DIR="OUTPUT"
+OUTPUT_DIR="output"
 
 # Export for Python subprocesses
 export HF_TOKEN
